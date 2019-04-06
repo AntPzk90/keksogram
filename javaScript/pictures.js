@@ -60,6 +60,7 @@ galleryOverlayClose.addEventListener("keydown",function(evt){
 document.addEventListener("keydown", function(evt){
 	if(evt.keyCode === 27){
 		fotoCloseHendler();
+		
 	}
 });
 //открытие карточки когда её миниатюра в фокуси при нажатии на ENTER
