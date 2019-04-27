@@ -183,6 +183,7 @@ formControls.addEventListener("keyup", function(evt){
 	}
 	//создание сообщения об ошибке с переносом строки
 	var errorMassege = errorMessageFunction(checkSymbol,noRepeatHashTags,hashTagsCount);
+
 	var printErrorMassege = function(massege){
 		var forPrint = "";
 		for(var i = 0; i < massege.length;i++){
