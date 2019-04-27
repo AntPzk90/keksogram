@@ -862,3 +862,17 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
 .footer-social-item-vk {
   background-position: -84px 0;
 }
+.error-massege{
+  display: none;
+}
+.error-massege--active{
+  display: block;
+  position: absolute;
+  bottom: 225px;
+  width: 200px;
+  height: auto;
+  padding: 10px;
+  border-radius: 10px;
+  right: -220px;;
+  border:3px solid red;
+}
