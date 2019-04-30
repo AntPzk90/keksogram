@@ -1,4 +1,5 @@
-(function(){
+"use strict";
+ (function(){
     //все карточки на странице
     var picturesInDOM = pictureContainer.querySelectorAll(".picture");
     //обработчик нажатия на фото

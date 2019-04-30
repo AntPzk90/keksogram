@@ -1,3 +1,4 @@
+"use strict";
 (function(){
     //валидация
     var formControls = document.querySelector(".upload-form");

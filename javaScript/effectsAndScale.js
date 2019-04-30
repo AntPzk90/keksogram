@@ -1,3 +1,4 @@
+"use strict";
 (function(){
     // работа с масштабом картинки
     var controlResizeBtnDec = document.querySelector(".upload-resize-controls-button-dec");
@@ -48,8 +49,11 @@
     //работа с фильтром фотографий
     var effectControls = document.querySelector(".upload-form");
     var effectInputs = effectControls.querySelectorAll("input[name=effect]");
+    //пин ренжа
     var uploadPin = document.querySelector(".upload-effect-level-pin");
+    //линия ренжа
     var uploadLine = document.querySelector(".upload-effect-level-line");
+    //уровень ренжа
     var uploadlevel = document.querySelector(".upload-effect-level-val");
 
     var inputClickHendler = function(clickedEl,index){
@@ -82,9 +86,7 @@
     for (var i = 0; i < effectInputs.length; i++){
         inputClickHendler(effectInputs[i],i);
     }
-    //=================================
-    //drag
-    
+    //dragNdrop
     uploadPin.addEventListener("mousedown",function(evt){
         var startCoords = {
             x: evt.clientX,
@@ -109,7 +111,7 @@
                 uploadPin.style.left = uploadLineWidth + "px"; 
             }
             //приведение положения ползунка к процентам
-            procent = Math.floor(dragedPinCoords / (uploadLineWidth / 100));
+            var procent = Math.floor(dragedPinCoords / (uploadLineWidth / 100));
             //поиск фильтра который в данный момент на фото
             var chrome = workingFoto.classList.contains("effect-chrome");
             var sepia = workingFoto.classList.contains("effect-sepia");
