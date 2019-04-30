@@ -1,6 +1,6 @@
 "use strict";
 (function(){
-	//создание и отгрузка фотографий на главную страницу ===========
+//создание и отгрузка фотографий на главную страницу ===========
 var pictureTemplate = document.querySelector("#picture-template")
 .content.querySelector(".picture");
 window.pictureContainer = document.querySelector(".pictures");
@@ -13,21 +13,34 @@ var createPuctureItem = function(picture){
 
 	return pictureItem
 }
-var fragment = document.createDocumentFragment();
-for(var i = 0; i < pictures.length; i ++){
-	fragment.appendChild(createPuctureItem(pictures[i]));
-}
-pictureContainer.appendChild(fragment);
-//карточка фотографии
-window.galleryOverlay = document.querySelector(".gallery-overlay");
-//ф-ция отрисовки карточки
-window.renderCardFoto = function(index){
-	galleryOverlay.classList.remove("hidden");
-	// вставка фотографии
-	galleryOverlay.querySelector(".gallery-overlay-image").src = pictures[index].url;
-	//число лайков
-	var likeCount = galleryOverlay.querySelector(".likes-count").textContent = pictures[index].likes;
-	//число комментариев
-	galleryOverlay.querySelector(".comments-count").textContent = pictures[index].comments.length;
-}
+window.load(function (pictures){
+	var fragment = document.createDocumentFragment();
+	for(var i = 0; i < pictures.length; i ++){
+		fragment.appendChild(createPuctureItem(pictures[i]));
+	}
+	pictureContainer.appendChild(fragment);
+	var picturesInDOM = document.querySelectorAll(".picture");
+	var fotoClickHendler = function(clickedEl,index){
+        picturesInDOM[index].addEventListener("click", function(evt){
+            evt.preventDefault();
+            renderCardFoto(index);
+        });
+    };
+    for (var i = 0; i < picturesInDOM.length; i++){
+        fotoClickHendler(picturesInDOM[i],i);
+	}
+	console.log(pictures)
+	//карточка фотографии
+	window.galleryOverlay = document.querySelector(".gallery-overlay");
+	//ф-ция отрисовки карточки
+	window.renderCardFoto = function(index){
+		galleryOverlay.classList.remove("hidden");
+		// вставка фотографии
+		galleryOverlay.querySelector(".gallery-overlay-image").src = pictures[index].url;
+		//число лайков
+		var likeCount = galleryOverlay.querySelector(".likes-count").textContent = pictures[index].likes;
+		//число комментариев
+		galleryOverlay.querySelector(".comments-count").textContent = pictures[index].comments.length;
+	}
+});
 })();

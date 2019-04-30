@@ -1,19 +1,19 @@
 "use strict";
  (function(){
     //все карточки на странице
-    var picturesInDOM = pictureContainer.querySelectorAll(".picture");
+    //var picturesInDOM = document.querySelectorAll(".picture");
     //обработчик нажатия на фото
-    var fotoClickHendler = function(clickedEl,index){
-        picturesInDOM[index].addEventListener("click", function(evt){
-            evt.preventDefault();
-            renderCardFoto(index);
-        });
-    };
-    for (var i = 0; i < picturesInDOM.length; i++){
-        fotoClickHendler(picturesInDOM[i],i);
-    }
+    // var fotoClickHendler = function(clickedEl,index){
+    //     picturesInDOM[index].addEventListener("click", function(evt){
+    //         evt.preventDefault();
+    //         renderCardFoto(index);
+    //     });
+    // };
+    // for (var i = 0; i < picturesInDOM.length; i++){
+    //     fotoClickHendler(picturesInDOM[i],i);
+    // }
     //обработчик закрытия карточки
-    var galleryOverlayClose =  galleryOverlay.querySelector(".gallery-overlay-close");
+    var galleryOverlayClose =  document.querySelector(".gallery-overlay-close");
     var fotoCloseHendler = function(){
         galleryOverlay.classList.add("hidden");
     }
@@ -46,9 +46,9 @@
     //работа с формой
     var uploadInput = document.querySelector(".upload-input");
     var uploadOverlay = document.querySelector(".upload-overlay");
-    //uploadInput.addEventListener("change", function(evt){
+    uploadInput.addEventListener("change", function(evt){
         uploadOverlay.classList.remove("hidden");
-    //});
+    });
     
     var btnCloseForm = document.querySelector(".upload-form-cancel");
     //обработчик закрытия формы
