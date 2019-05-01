@@ -4,7 +4,7 @@
 var pictureTemplate = document.querySelector("#picture-template")
 .content.querySelector(".picture");
 window.pictureContainer = document.querySelector(".pictures");
-var createPuctureItem = function(picture){
+var createPictureItem = function(picture){
 	var pictureItem = pictureTemplate.cloneNode(true);
 
 	pictureItem.querySelector("img").src = picture.url;
@@ -13,12 +13,15 @@ var createPuctureItem = function(picture){
 
 	return pictureItem
 }
-window.load(function (pictures){
+var appendPictures = function(createPicture,items){
 	var fragment = document.createDocumentFragment();
-	for(var i = 0; i < pictures.length; i ++){
-		fragment.appendChild(createPuctureItem(pictures[i]));
+	for(var i = 0; i < items.length; i ++){
+		fragment.appendChild(createPicture(items[i]));
 	}
 	pictureContainer.appendChild(fragment);
+}
+window.load(function (pictures){
+	appendPictures(createPictureItem, pictures)
 	var picturesInDOM = document.querySelectorAll(".picture");
 	var fotoClickHendler = function(clickedEl,index){
         picturesInDOM[index].addEventListener("click", function(evt){
@@ -29,7 +32,6 @@ window.load(function (pictures){
     for (var i = 0; i < picturesInDOM.length; i++){
         fotoClickHendler(picturesInDOM[i],i);
 	}
-	console.log(pictures)
 	//карточка фотографии
 	window.galleryOverlay = document.querySelector(".gallery-overlay");
 	//ф-ция отрисовки карточки

@@ -45,7 +45,7 @@
     });
     //работа с формой
     var uploadInput = document.querySelector(".upload-input");
-    var uploadOverlay = document.querySelector(".upload-overlay");
+    window.uploadOverlay = document.querySelector(".upload-overlay");
     uploadInput.addEventListener("change", function(evt){
         uploadOverlay.classList.remove("hidden");
     });

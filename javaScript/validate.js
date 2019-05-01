@@ -93,4 +93,12 @@
             errorParagraph.innerHTML = errorMassegeForPrint;
         } 
     });
+    formControls.addEventListener("submit", function(evt){
+        window.upload(new FormData(formControls), function(response){
+            window.uploadOverlay.classList.add("hidden");
+            windiw.uploadOverlay.reset();
+            console.log(response);
+        });
+        evt.preventDefault();
+    });
     })();
