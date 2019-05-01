@@ -96,9 +96,16 @@
     formControls.addEventListener("submit", function(evt){
         window.upload(new FormData(formControls), function(response){
             window.uploadOverlay.classList.add("hidden");
-            windiw.uploadOverlay.reset();
-            console.log(response);
+            formControls.reset();
+            console.log(response)
         });
         evt.preventDefault();
+    },function(){
+        var body = document.querySelector("body");
+        var errorMassegeDiv = document.createElement("p");
+        var filtersForm = document.querySelector(".filters");
+        errorMassegeDiv.textContent = "Ошибка отправки =) Не растраивайтесь скоро всё поправится";
+        body.insertBefore(errorMassegeDiv,filtersForm);
+        errorMassegeDiv.classList.add("load-error-massege");
     });
     })();

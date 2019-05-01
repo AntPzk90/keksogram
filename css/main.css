@@ -876,3 +876,20 @@ input[type=radio]:checked + .upload-effect-label .upload-effect-preview {
   right: -220px;;
   border:3px solid red;
 }
+.load-error-massege{
+  width: 300px;
+  height: 100px;
+  position: fixed;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px solid red;
+  background-color: #000;
+  z-index: 10;
+  text-align: center;
+}

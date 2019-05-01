@@ -6,7 +6,13 @@ window.load = function(onSuccess, onError){
     xhr.responseType = "json";
     xhr.open("GET", URL);
     xhr.addEventListener("load", function(){
-        onSuccess(xhr.response)
+        if(xhr.status == 200){
+            onSuccess(xhr.response)
+            console.log(xhr.status)
+        }else if(xhr.status == 400 || xhr.status == 404){
+            onError();
+        }
+        console.log(xhr.status)
     });
     xhr.send();
 };
@@ -20,7 +26,11 @@ window.onLoadDoSuccess = function(pictures){
         var xhr = new XMLHttpRequest();
         xhr.responseType = "json";
         xhr.addEventListener("load", function(){
-            onSuccess(xhr.response)
+            if(xhr.status == 200){
+                onSuccess(xhr.response)
+            }else if(xhr.status == 400 || xhr.status == 404){
+                onError();
+            }
         });
         xhr.open("POST", URL);
         xhr.send(data);
