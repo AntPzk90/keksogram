@@ -12,7 +12,7 @@ var createPictureItem = function(picture){
 	var pictureItem = pictureTemplate.cloneNode(true);
 
 	pictureItem.querySelector("img").src = picture.url;
-	pictureItem.querySelector(".picture-comments").textContent = picture.comments;
+	pictureItem.querySelector(".picture-comments").textContent = picture.comments.length;
 	pictureItem.querySelector(".picture-likes").textContent = picture.likes;
 
 	return pictureItem
@@ -29,31 +29,79 @@ var appendPictures = function(createPicture,items){
 	}
 	pictureContainer.appendChild(fragment);
 }
-var createError = function(){
-
-}
+// сортировка по лайкам
+var sortedLikesPictures = function(arr){
+	arr.sort(function(left,right){
+	if (left.likes > right.likes) {
+		return -1;
+		}
+		if (left.likes < right.likes) {
+		return 1;
+		}
+		// left должно быть равным right
+		return 0;
+	});
+	return arr
+};
+// сортировка по коментариям
+var sortedCommentsPictures = function(arr){
+	arr.sort(function(left,right){
+	if (left.comments.length > right.comments.length) {
+		return -1;
+		}
+		if (left.comments.length < right.comments.length) {
+		return 1;
+		}
+		// left должно быть равным right
+		return 0;
+	});
+	return arr
+};
+//фильтр случайных фотографий
+var randomPhoto = function(arr){
+	var randomPhotoArr =[];
+	for(var i = 0; i < 10; i++){
+		randomPhotoArr.push(arr[i]);
+	}
+	return randomPhotoArr.sort(function(a, b) {
+		return Math.random() - 0.5;
+	  });
+};
+//удаление елементов
+var deleteElements = function(arr){
+	for(var i = 0; i < arr.length;i++){
+		arr[i].remove();
+	}
+};
 //функция загрузки данных с сервера описана в модуле beckend.js,
 // работу с событиями выполняем внутри этой ф-ции
 window.load(function (pictures){
-	appendPictures(createPictureItem, pictures)
-	// находим отрисованые карточки в дом дереве
-	var picturesInDOM = document.querySelectorAll(".picture");
-	/*
-	обработчик события клика по карточке
-	@param clickedEl {DOMel} карточка на кторой был клик
-	@param index {int} индекс элемента на котором произошел клик
-	*/
-	var fotoClickHendler = function(clickedEl,index){
-        picturesInDOM[index].addEventListener("click", function(evt){
-            evt.preventDefault();
-            renderCardFoto(index);
-        });
-    };
-    for (var i = 0; i < picturesInDOM.length; i++){
-        fotoClickHendler(picturesInDOM[i],i);
-	}
-	//карточка фотографии
-	window.galleryOverlay = document.querySelector(".gallery-overlay");
+	var picturesCopy = pictures.slice();
+	console.log(picturesCopy)
+	appendPictures(createPictureItem, pictures);
+	// блок с фильтрами
+	var picturesFilters = document.querySelector(".filters");
+	picturesFilters.classList.remove("hidden");
+	picturesFilters.addEventListener("change", function(){
+		var filtersRadioChecked = picturesFilters.querySelector("input[type=radio]:checked");
+		var filterValue = filtersRadioChecked.getAttribute("value");
+		var pictureContainerItems = pictureContainer.querySelectorAll(".picture");
+		deleteElements(pictureContainerItems);
+		switch(filterValue){
+			case "recommend":
+				appendPictures(createPictureItem, pictures);
+				break;
+			case "discussed":
+				appendPictures(createPictureItem, sortedCommentsPictures(picturesCopy));
+				break;
+			case "random":
+				appendPictures(createPictureItem, randomPhoto(picturesCopy));
+				break;
+			case "popular":
+				appendPictures(createPictureItem, sortedLikesPictures(picturesCopy));
+				break;
+		}
+	});
 	/*
 	ф-ция отрисовки увеличиной карточки при клике
 	@param index {int} индекс элемента массива с карточками фото который нужно отрисовать
@@ -67,6 +115,24 @@ window.load(function (pictures){
 		//число комментариев
 		galleryOverlay.querySelector(".comments-count").textContent = pictures[index].comments.length;
 	}
+	// находим отрисованые карточки в дом дереве
+	var picturesInDOM = document.querySelectorAll(".picture");
+	/*
+	обработчик события клика по карточке
+	@param clickedEl {DOMel} карточка на кторой был клик
+	@param index {int} индекс элемента на котором произошел клик
+	*/
+	var fotoClickHendler = function(clickedEl,index){
+        picturesInDOM[index].addEventListener("click", function(evt){
+            evt.preventDefault();
+			renderCardFoto(index);
+        });
+    };
+    for (var i = 0; i < picturesInDOM.length; i++){
+        fotoClickHendler(picturesInDOM[i],i);
+	}
+	//карточка фотографии
+	window.galleryOverlay = document.querySelector(".gallery-overlay");
 },function(){
 	var body = document.querySelector("body");
 	var errorMassegeDiv = document.createElement("p");
