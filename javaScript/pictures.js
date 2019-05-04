@@ -15,6 +15,11 @@ var createPictureItem = function(picture){
 	pictureItem.querySelector(".picture-comments").textContent = picture.comments.length;
 	pictureItem.querySelector(".picture-likes").textContent = picture.likes;
 
+	pictureItem.addEventListener("click",function(evt){
+		evt.preventDefault();
+		renderCardFoto(picture);
+	})
+
 	return pictureItem
 }
 /*
@@ -22,10 +27,10 @@ var createPictureItem = function(picture){
 @param createPicture {finction} фция которая клонирует и создаёт карточку
 @param items {array} массив с карточками
 */
-var appendPictures = function(createPicture,items){
+var appendPictures = function(items){
 	var fragment = document.createDocumentFragment();
 	for(var i = 0; i < items.length; i ++){
-		fragment.appendChild(createPicture(items[i]));
+		fragment.appendChild(createPictureItem(items[i]));
 	}
 	pictureContainer.appendChild(fragment);
 }
@@ -77,8 +82,7 @@ var deleteElements = function(arr){
 // работу с событиями выполняем внутри этой ф-ции
 window.load(function (pictures){
 	var picturesCopy = pictures.slice();
-	console.log(picturesCopy)
-	appendPictures(createPictureItem, pictures);
+	appendPictures(pictures);
 	// блок с фильтрами
 	var picturesFilters = document.querySelector(".filters");
 	picturesFilters.classList.remove("hidden");
@@ -89,50 +93,49 @@ window.load(function (pictures){
 		deleteElements(pictureContainerItems);
 		switch(filterValue){
 			case "recommend":
-				appendPictures(createPictureItem, pictures);
+				appendPictures(pictures);
 				break;
 			case "discussed":
-				appendPictures(createPictureItem, sortedCommentsPictures(picturesCopy));
+				appendPictures(sortedCommentsPictures(picturesCopy));
 				break;
 			case "random":
-				appendPictures(createPictureItem, randomPhoto(picturesCopy));
+				appendPictures(randomPhoto(picturesCopy));
 				break;
 			case "popular":
-				appendPictures(createPictureItem, sortedLikesPictures(picturesCopy));
+				appendPictures(sortedLikesPictures(picturesCopy));
 				break;
 		}
 	});
-	/*
-	ф-ция отрисовки увеличиной карточки при клике
-	@param index {int} индекс элемента массива с карточками фото который нужно отрисовать
-	*/
-	window.renderCardFoto = function(index){
-		galleryOverlay.classList.remove("hidden");
-		// вставка фотографии
-		galleryOverlay.querySelector(".gallery-overlay-image").src = pictures[index].url;
-		//число лайков
-		var likeCount = galleryOverlay.querySelector(".likes-count").textContent = pictures[index].likes;
-		//число комментариев
-		galleryOverlay.querySelector(".comments-count").textContent = pictures[index].comments.length;
-	}
-	// находим отрисованые карточки в дом дереве
-	var picturesInDOM = document.querySelectorAll(".picture");
 	/*
 	обработчик события клика по карточке
 	@param clickedEl {DOMel} карточка на кторой был клик
 	@param index {int} индекс элемента на котором произошел клик
 	*/
-	var fotoClickHendler = function(clickedEl,index){
-        picturesInDOM[index].addEventListener("click", function(evt){
-            evt.preventDefault();
-			renderCardFoto(index);
-        });
-    };
-    for (var i = 0; i < picturesInDOM.length; i++){
-        fotoClickHendler(picturesInDOM[i],i);
-	}
+	// var picturesInDOM = document.querySelectorAll(".picture");
+	// var fotoClickHendler = function(clickedEl,index){
+    //     picturesInDOM[index].addEventListener("click", function(evt){
+    //         evt.preventDefault();
+	// 		renderCardFoto(index);
+    //     });
+    // };
+    // for (var i = 0; i < picturesInDOM.length; i++){
+    //     fotoClickHendler(picturesInDOM[i],i);
+	// }
 	//карточка фотографии
 	window.galleryOverlay = document.querySelector(".gallery-overlay");
+	/*
+	ф-ция отрисовки увеличиной карточки при клике
+	@param index {int} индекс элемента массива с карточками фото который нужно отрисовать
+	*/
+	window.renderCardFoto = function(picture){
+		galleryOverlay.classList.remove("hidden");
+		// вставка фотографии
+		galleryOverlay.querySelector(".gallery-overlay-image").src = picture.url;
+		//число лайков
+		var likeCount = galleryOverlay.querySelector(".likes-count").textContent = picture.likes;
+		//число комментариев
+		galleryOverlay.querySelector(".comments-count").textContent = picture.comments.length;
+	}
 },function(){
 	var body = document.querySelector("body");
 	var errorMassegeDiv = document.createElement("p");
