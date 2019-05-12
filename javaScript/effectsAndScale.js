@@ -60,6 +60,7 @@
         effectInputs[index].addEventListener("click", function(evt){
             var filterValue = effectInputs[index].getAttribute("value");
             var effectValueNow = workingFoto.classList[1];
+            controlResizeInput.value = "100%"
             workingFoto.classList.remove(effectValueNow);
             workingFoto.removeAttribute("style");
             uploadPin.style.left = uploadLine.offsetWidth + "px";

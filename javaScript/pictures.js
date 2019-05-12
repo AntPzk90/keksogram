@@ -106,21 +106,6 @@ window.load(function (pictures){
 				break;
 		}
 	});
-	/*
-	обработчик события клика по карточке
-	@param clickedEl {DOMel} карточка на кторой был клик
-	@param index {int} индекс элемента на котором произошел клик
-	*/
-	// var picturesInDOM = document.querySelectorAll(".picture");
-	// var fotoClickHendler = function(clickedEl,index){
-    //     picturesInDOM[index].addEventListener("click", function(evt){
-    //         evt.preventDefault();
-	// 		renderCardFoto(index);
-    //     });
-    // };
-    // for (var i = 0; i < picturesInDOM.length; i++){
-    //     fotoClickHendler(picturesInDOM[i],i);
-	// }
 	//карточка фотографии
 	window.galleryOverlay = document.querySelector(".gallery-overlay");
 	/*

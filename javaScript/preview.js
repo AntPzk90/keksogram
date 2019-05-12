@@ -47,9 +47,9 @@
     var uploadInput = document.querySelector(".upload-input");
     window.uploadOverlay = document.querySelector(".upload-overlay");
     uploadInput.addEventListener("change", function(evt){
+        evt.preventDefault();
         uploadOverlay.classList.remove("hidden");
     });
-    
     var btnCloseForm = document.querySelector(".upload-form-cancel");
     //обработчик закрытия формы
     var formCloseHendler = function(){
