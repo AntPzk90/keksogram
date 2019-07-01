@@ -5,8 +5,8 @@
     var hashTagInput = document.querySelector(".upload-form-hashtags");
     var errorParagraph = document.querySelector(".error-massege");
     var uploadSubmit = document.querySelector("#upload-submit");
-    
-    formControls.addEventListener("keyup", function(evt){
+
+    var validateActions = function(evt){
         var hashtagsArr = hashTagInput.value.split(' ');
         uploadSubmit.setAttribute("disabled", "disabled");
         //добавление красной рамки
@@ -87,12 +87,16 @@
             uploadSubmit.removeAttribute("disabled");
             errorParagraph.classList.remove("error-massege--active");
         }else{
-            evt.preventDefault();
-            addRedBorder();
-            errorParagraph.classList.add("error-massege--active");
-            errorParagraph.innerHTML = errorMassegeForPrint;
+            var errorRender = function(){
+                evt.preventDefault();
+                addRedBorder();
+                errorParagraph.classList.add("error-massege--active");
+                errorParagraph.innerHTML = errorMassegeForPrint;
+            }
+            setTimeout(errorRender, 2000);
         } 
-    });
+    };// validateActions
+    formControls.addEventListener("keyup", validateActions);
     formControls.addEventListener("submit", function(evt){
         window.upload(new FormData(formControls), function(response){
             window.uploadOverlay.classList.add("hidden");
